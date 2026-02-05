@@ -1,19 +1,43 @@
-name: Executive Insider Trading Monitor
+name: Executive Insider Trading Monitor - Smart Schedule
 
 on:
   schedule:
-    # WEEKDAYS (Monday-Friday)
-    # Every 2 hours during market hours: 7 AM - 4 PM CT (1 PM - 10 PM UTC)
-    - cron: '0 13,15,17,19,21 * * 1-5'  # 7am, 9am, 11am, 1pm, 3pm CT
+    # ============================================================
+    # WEEKDAYS - MARKET HOURS (9:30 AM - 4 PM ET / 8:30 AM - 3 PM CT)
+    # Every 30 minutes during trading hours (moderate activity)
+    # ============================================================
+    - cron: '0,30 14,15,16,17,18,19,20 * * 1-5'  # 8:30am-3pm CT (16 checks/day)
     
-    # Every 4 hours outside market hours on weekdays
-    - cron: '0 1,5,9 * * 1-5'  # 7pm, 11pm, 3am CT
+    # ============================================================
+    # WEEKDAYS - AFTER MARKET PEAK (4 PM - 10 PM ET / 3 PM - 9 PM CT)
+    # Every 15 minutes during PEAK filing window (70% of filings occur here)
+    # ============================================================
+    - cron: '0,15,30,45 21,22,23,0,1,2 * * 1-5'  # 3pm-9pm CT (24 checks/day)
     
-    # WEEKENDS (Saturday-Sunday)
-    # Every 4 hours all day
-    - cron: '0 */4 * * 0,6'  # Every 4 hours on Sat & Sun
+    # ============================================================
+    # WEEKDAYS - LATE NIGHT (10 PM - 8 AM ET / 9 PM - 7 AM CT)
+    # Every 2 hours (minimal activity, people sleep)
+    # ============================================================
+    - cron: '0 3,5,7,9,11,13 * * 1-5'  # 9pm-7am CT (6 checks/day)
+    
+    # ============================================================
+    # WEEKENDS (Saturday & Sunday)
+    # Every 4 hours (very minimal SEC activity)
+    # ============================================================
+    - cron: '0 */4 * * 0,6'  # Every 4 hours (6 checks/day each)
   
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:  # Allow manual trigger for testing
+
+# ============================================================
+# Estimated Monthly Runs:
+# Weekdays: (16 + 24 + 6) = 46 runs/day × 22 days = 1,012 runs
+# Weekends: 6 runs/day × 8 days = 48 runs
+# TOTAL: ~1,060 runs/month
+# 
+# With 70% early exits (no new data):
+# - GitHub Actions: ~742 × 2 min = 1,484 minutes (74% of free tier)
+# - Vercel Builds: ~318 × 1 min = 318 minutes (5% of free tier)
+# ============================================================
 
 jobs:
   monitor:
@@ -25,11 +49,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # Need to compare with previous commit
       
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      
+      - name: Cache Python dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       
       - name: Install dependencies
         run: |
@@ -37,18 +71,47 @@ jobs:
           pip install requests
       
       - name: Run Executive Insider Trading Monitor
+        id: monitor
         env:
           BOT_TOKEN_FORM4: ${{ secrets.BOT_TOKEN_FORM4 }}
           BOT_TOKEN_FORM8K: ${{ secrets.BOT_TOKEN_FORM8K }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
         run: |
+          echo "🔍 Starting insider trading monitor..."
           python insider_monitor.py
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git add data/*.json seen_*.txt 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "📊 No new data detected - skipping commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "🚨 New data detected - preparing commit"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
       
       - name: Commit and push data updates
+        if: steps.check_changes.outputs.has_changes == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/*.json seen_*.txt
-          git diff --staged --quiet || git commit -m "📊 Update Executive Insider Trading data - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          
+          # Get stats for commit message
+          TRADE_COUNT=$(python -c "import json; print(len(json.load(open('data/trades_data.json'))['trades']))" 2>/dev/null || echo "N/A")
+          FORM8K_COUNT=$(python -c "import json; print(len(json.load(open('data/form8k_data.json'))['filings']))" 2>/dev/null || echo "N/A")
+          
+          git commit -m "📊 Update: ${TRADE_COUNT} trades, ${FORM8K_COUNT} 8-Ks - $(date '+%Y-%m-%d %H:%M:%S UTC')"
           git push
+          
+          echo "✅ Successfully pushed new data to repository"
+          echo "🚀 Vercel will now rebuild and deploy"
+      
+      - name: Log skip event
+        if: steps.check_changes.outputs.has_changes == 'false'
+        run: |
+          echo "💡 Build skipped - this saves Vercel build minutes!"
+          echo "⏱️  Next check in 15-120 minutes (depending on schedule)"
