@@ -1,0 +1,54 @@
+name: Executive Insider Trading Monitor
+
+on:
+  schedule:
+    # WEEKDAYS (Monday-Friday)
+    # Every 2 hours during market hours: 7 AM - 4 PM CT (1 PM - 10 PM UTC)
+    - cron: '0 13,15,17,19,21 * * 1-5'  # 7am, 9am, 11am, 1pm, 3pm CT
+    
+    # Every 4 hours outside market hours on weekdays
+    - cron: '0 1,5,9 * * 1-5'  # 7pm, 11pm, 3am CT
+    
+    # WEEKENDS (Saturday-Sunday)
+    # Every 4 hours all day
+    - cron: '0 */4 * * 0,6'  # Every 4 hours on Sat & Sun
+  
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Needed to push changes
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+      
+      - name: Run Executive Insider Trading Monitor
+        env:
+          BOT_TOKEN_FORM4: ${{ secrets.BOT_TOKEN_FORM4 }}
+          BOT_TOKEN_FORM8K: ${{ secrets.BOT_TOKEN_FORM8K }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        run: |
+          python insider_monitor.py
+      
+      - name: Commit and push data updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/*.json seen_*.txt
+          git diff --staged --quiet || git commit -m "📊 Update Executive Insider Trading data - $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          git push

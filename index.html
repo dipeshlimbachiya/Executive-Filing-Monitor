@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Insider Trading Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <div class="profile-link">
+            <img src="https://github.com/dlimbachiya16.png" alt="Developer Profile" class="profile-image">
+            <div class="profile-tooltip">
+                <div class="profile-name">Dipesh Limbachiya</div>
+                <div class="profile-role">Creator and Analyst</div>
+                <a href="https://www.linkedin.com/in/dipeshlimbachiya" target="_blank" class="linkedin-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    Connect on LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Executive Insider Trading Monitor</h1>
+            <p class="subtitle">Real-time SEC Form 4 & 8-K Filing Intelligence</p>
+            <div style="margin-top: 1rem;">
+                <span class="status-live">LIVE</span>
+                <span style="color: var(--text-muted); margin-left: 1rem; font-size: 0.85rem;" id="lastUpdate">Loading...</span>
+            </div>
+        </header>
+
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Alerts</div>
+                <div class="stat-value blue" id="totalAlerts">0</div>
+                <div class="stat-change">All-time filings tracked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Insider Buys</div>
+                <div class="stat-value green" id="totalBuys">0</div>
+                <div class="stat-change">Bullish signals detected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Insider Sells</div>
+                <div class="stat-value red" id="totalSells">0</div>
+                <div class="stat-change">Selling activity tracked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Value</div>
+                <div class="stat-value yellow" id="totalValue">$0</div>
+                <div class="stat-change">Aggregate trade value</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Form 8-K Filings</div>
+                <div class="stat-value blue" id="total8K">0</div>
+                <div class="stat-change">Material events filed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Active Tickers</div>
+                <div class="stat-value green" id="activeTickers">0</div>
+                <div class="stat-change">Companies monitored</div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <label for="filterType">Trade Type</label>
+                <select id="filterType">
+                    <option value="all">All Trades</option>
+                    <option value="BUY">Buys Only</option>
+                    <option value="SELL">Sells Only</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="filterTicker">Filter Ticker</label>
+                <input type="text" id="filterTicker" placeholder="e.g., TSLA, NVDA">
+            </div>
+            <div class="control-group">
+                <label for="filterMinValue">Min Value ($)</label>
+                <input type="number" id="filterMinValue" placeholder="100000" value="100000">
+            </div>
+            <div class="control-group">
+                <label for="sortBy">Sort By</label>
+                <select id="sortBy">
+                    <option value="date">Date (Newest)</option>
+                    <option value="value">Value (Highest)</option>
+                    <option value="shares">Shares (Most)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="applyFilters()">Apply Filters</button>
+            <button class="btn" onclick="resetFilters()">Reset</button>
+        </div>
+
+        <!-- Custom Watchlist Controls -->
+        <div class="controls" style="margin-top: 1rem;">
+            <div class="control-group" style="flex: 1;">
+                <label for="customWatchlist">Custom Watchlist (comma-separated tickers)</label>
+                <input type="text" id="customWatchlist" placeholder="e.g., AAPL, MSFT, TSLA or leave empty for all 77 stocks" style="width: 100%;">
+            </div>
+            <button class="btn" onclick="applyCustomWatchlist()">Apply Custom Watchlist</button>
+            <button class="btn" onclick="clearCustomWatchlist()">Show All Stocks</button>
+        </div>
+
+        <!-- Form 8-K Sort Controls -->
+        <div class="controls" style="margin-top: 1rem; display: none;" id="form8kControls">
+            <div class="control-group">
+                <label for="sort8K">Sort Form 8-K By</label>
+                <select id="sort8K">
+                    <option value="newest">Date (Newest First)</option>
+                    <option value="oldest">Date (Oldest First)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="applyForm8KSort()">Apply Sort</button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('form4')">Form 4 Trades</button>
+            <button class="tab" onclick="switchTab('form8k')">Form 8-K Filings</button>
+            <button class="tab" onclick="switchTab('analytics')">Analytics</button>
+        </div>
+
+        <!-- Form 4 Table -->
+        <div id="form4Content" class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Ticker</th>
+                        <th>Insider / Code</th>
+                        <th>Shares</th>
+                        <th>Price</th>
+                        <th>Total Value</th>
+                        <th>Transaction Date</th>
+                        <th>Filed</th>
+                        <th>SEC Link</th>
+                    </tr>
+                </thead>
+                <tbody id="form4Body">
+                    <tr>
+                        <td colspan="9" class="loading">
+                            <div class="spinner"></div>
+                            Loading insider trades...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Form 8-K Table -->
+        <div id="form8kContent" class="table-container" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Report Date</th>
+                        <th>Filed Date</th>
+                        <th>Accepted</th>
+                        <th>What's This About?</th>
+                        <th>SEC Filing</th>
+                    </tr>
+                </thead>
+                <tbody id="form8kBody">
+                    <tr>
+                        <td colspan="6" class="loading">
+                            <div class="spinner"></div>
+                            Loading Form 8-K filings...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Analytics Charts -->
+        <div id="analyticsContent" style="display: none;">
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3 class="chart-title">Buy vs Sell Activity</h3>
+                    <canvas id="buySellChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Top 10 Active Tickers</h3>
+                    <canvas id="tickerChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Trade Value Distribution</h3>
+                    <canvas id="valueChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Filing Timeline (Last 30 Days)</h3>
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
