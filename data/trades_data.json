@@ -14,6 +14,19 @@
       "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=NVDA&type=4&dateb=&owner=include&count=100"
     },
     {
+      "symbol": "NVDA",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-02-06",
+      "filingDate": "2026-02-06",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=NVDA&type=4&dateb=&owner=include&count=100"
+    },
+    {
       "id": "AAPL_LEVINSON ARTHUR D_2026-02-01_1113_-1113",
       "symbol": "AAPL",
       "name": "LEVINSON ARTHUR D",
@@ -7258,10 +7271,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 455,
-    "buys": 156,
+    "totalAlerts": 456,
+    "buys": 157,
     "sells": 299,
-    "totalValue": 1172142240.4638
+    "totalValue": 1172292240.4638
   },
-  "lastUpdated": "2026-02-06T22:19:37.420022"
+  "lastUpdated": "2026-02-10T02:53:55.218754"
 }
