@@ -7,6 +7,19 @@
       "shares": 1000,
       "price": 150.0,
       "totalValue": 150000,
+      "transactionDate": "2026-03-24",
+      "filingDate": "2026-03-24",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=NVDA&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "NVDA",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
       "transactionDate": "2026-03-20",
       "filingDate": "2026-03-20",
       "transactionCode": "P",
@@ -7635,10 +7648,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 484,
-    "buys": 185,
+    "totalAlerts": 485,
+    "buys": 186,
     "sells": 299,
-    "totalValue": 1176492240.4638
+    "totalValue": 1176642240.4638
   },
-  "lastUpdated": "2026-03-21T01:46:50.820270"
+  "lastUpdated": "2026-03-24T21:34:15.584978"
 }
