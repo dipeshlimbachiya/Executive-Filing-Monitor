@@ -7,6 +7,32 @@
       "shares": 1000,
       "price": 150.0,
       "totalValue": 150000,
+      "transactionDate": "2026-04-17",
+      "filingDate": "2026-04-17",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-04-17",
+      "filingDate": "2026-04-17",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
       "transactionDate": "2026-04-03",
       "filingDate": "2026-04-03",
       "transactionCode": "P",
@@ -7713,10 +7739,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 490,
-    "buys": 191,
+    "totalAlerts": 492,
+    "buys": 193,
     "sells": 299,
-    "totalValue": 1177392240.4638
+    "totalValue": 1177692240.4638
   },
-  "lastUpdated": "2026-04-03T22:40:20.454609"
+  "lastUpdated": "2026-04-17T23:07:38.626827"
 }
