@@ -1,6 +1,19 @@
 {
   "trades": [
     {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-05-08",
+      "filingDate": "2026-05-08",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
       "symbol": "TSLA",
       "type": "BUY",
       "name": "Insider Name",
@@ -7778,10 +7791,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 495,
-    "buys": 196,
+    "totalAlerts": 496,
+    "buys": 197,
     "sells": 299,
-    "totalValue": 1178142240.4638
+    "totalValue": 1178292240.4638
   },
-  "lastUpdated": "2026-05-04T23:52:55.163192"
+  "lastUpdated": "2026-05-08T22:54:09.343651"
 }
