@@ -1,6 +1,19 @@
 {
   "trades": [
     {
+      "symbol": "NVDA",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-06-10",
+      "filingDate": "2026-06-10",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=NVDA&type=4&dateb=&owner=include&count=100"
+    },
+    {
       "symbol": "TSLA",
       "type": "BUY",
       "name": "Insider Name",
@@ -7882,10 +7895,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 503,
-    "buys": 204,
+    "totalAlerts": 504,
+    "buys": 205,
     "sells": 299,
-    "totalValue": 1179342240.4638
+    "totalValue": 1179492240.4638
   },
-  "lastUpdated": "2026-06-09T23:50:29.741025"
+  "lastUpdated": "2026-06-10T22:04:00.385705"
 }
