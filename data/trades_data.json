@@ -14,6 +14,32 @@
       "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=TSLA&type=4&dateb=&owner=include&count=100"
     },
     {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-06-17",
+      "filingDate": "2026-06-17",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-06-17",
+      "filingDate": "2026-06-17",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
       "symbol": "NVDA",
       "type": "BUY",
       "name": "Insider Name",
@@ -7908,10 +7934,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 505,
-    "buys": 206,
+    "totalAlerts": 507,
+    "buys": 208,
     "sells": 299,
-    "totalValue": 1179642240.4638
+    "totalValue": 1179942240.4638
   },
-  "lastUpdated": "2026-06-17T21:29:00.106961"
+  "lastUpdated": "2026-06-17T22:43:42.108543"
 }
