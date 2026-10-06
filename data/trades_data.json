@@ -7,6 +7,58 @@
       "shares": 1000,
       "price": 150.0,
       "totalValue": 150000,
+      "transactionDate": "2026-10-05",
+      "filingDate": "2026-10-05",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-10-05",
+      "filingDate": "2026-10-05",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-10-05",
+      "filingDate": "2026-10-05",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-10-05",
+      "filingDate": "2026-10-05",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
       "transactionDate": "2026-10-01",
       "filingDate": "2026-10-01",
       "transactionCode": "P",
@@ -8558,10 +8610,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 555,
-    "buys": 256,
+    "totalAlerts": 559,
+    "buys": 260,
     "sells": 299,
-    "totalValue": 1187142240.4638
+    "totalValue": 1187742240.4638
   },
-  "lastUpdated": "2026-10-01T23:20:55.330585"
+  "lastUpdated": "2026-10-06T01:38:25.686225"
 }
