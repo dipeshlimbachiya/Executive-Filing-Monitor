@@ -1,6 +1,19 @@
 {
   "trades": [
     {
+      "symbol": "AAPL",
+      "type": "BUY",
+      "name": "Insider Name",
+      "shares": 1000,
+      "price": 150.0,
+      "totalValue": 150000,
+      "transactionDate": "2026-10-15",
+      "filingDate": "2026-10-15",
+      "transactionCode": "P",
+      "transactionDescription": "Open market purchase",
+      "secLink": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=AAPL&type=4&dateb=&owner=include&count=100"
+    },
+    {
       "symbol": "NVDA",
       "type": "BUY",
       "name": "Insider Name",
@@ -8636,10 +8649,10 @@
     }
   ],
   "stats": {
-    "totalAlerts": 561,
-    "buys": 262,
+    "totalAlerts": 562,
+    "buys": 263,
     "sells": 299,
-    "totalValue": 1188042240.4638
+    "totalValue": 1188192240.4638
   },
-  "lastUpdated": "2026-10-09T23:24:38.802278"
+  "lastUpdated": "2026-10-15T23:31:17.089991"
 }
